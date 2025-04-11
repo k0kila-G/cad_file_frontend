@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchBlockDetails } from '../api';
+
 
 const BlockDetails = ({ blockId }) => {
   const [block, setBlock] = useState(null);
@@ -9,7 +10,7 @@ const BlockDetails = ({ blockId }) => {
 
     const fetchBlock = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/blocks/${blockId}`);
+        const response = await fetchBlockDetails(blockId);
         setBlock(response.data);
       } catch (error) {
         console.error('Error fetching block details:', error);

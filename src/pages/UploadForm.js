@@ -18,6 +18,8 @@ const FileUpload = ({ onUploadSuccess }) => {
       try {
         await uploadFile(formData);
         alert('Upload success!');
+        onUploadSuccess(); 
+
       } catch (err) {
         console.error(err.response?.data || err.message);
         alert('Upload failed');

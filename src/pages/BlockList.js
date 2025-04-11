@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchBlocks } from '../api';
+
 
 const BlockList = ({ onSelectBlock, reloadFlag }) => {
   const [blocks, setBlocks] = useState([]);
@@ -8,13 +9,11 @@ const BlockList = ({ onSelectBlock, reloadFlag }) => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const fetchBlocks = async () => {
+  const fetchBlock = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/blocks', {
-        params: { page, search }
-      });
-  
+      const res = await fetchBlocks(page, search);
+
       setBlocks(res.data?.data || []);
       setPages(res.data?.pages || 1);
     } catch (err) {
@@ -28,7 +27,7 @@ const BlockList = ({ onSelectBlock, reloadFlag }) => {
   
 
   useEffect(() => {
-    fetchBlocks();
+    fetchBlock();
   }, [page, reloadFlag, search]);
 
   const handleSearchChange = (e) => {
